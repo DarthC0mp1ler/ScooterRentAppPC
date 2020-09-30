@@ -1,6 +1,7 @@
 package Implementation;
 
 import Implementation.Memory.MemoryManager;
+import Implementation.UI.AppFrame;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -16,9 +17,10 @@ public class Main {
     }
 
     public static final String DIR_PATH = "C:/ScooterRent";
-    public static final String LOG_FILE = "LogFile.log";
+    private static final String LOG_FILE = "LogFile.log";
+    public static boolean _isWorking;
     public static Logger _logger;
-    public MemoryManager _memoryManager;
+    private Thread _memoryManager;
 
     private Main(){
 
@@ -27,8 +29,11 @@ public class Main {
             System.exit(-1);
         }
 
+        _isWorking = true;
+
         //starting Memory manager
         _memoryManager = new MemoryManager();
+        _memoryManager.start();
 
         //staring UI
         if(startUI() != null){
@@ -50,8 +55,6 @@ public class Main {
             File logFile = new File(DIR_PATH + "/" + LOG_FILE);
             if(!logFile.exists()) logFile.createNewFile();
 
-            
-
             fileHandler = new FileHandler(DIR_PATH + "/" + LOG_FILE);
 
             _logger.addHandler(fileHandler);
@@ -66,6 +69,7 @@ public class Main {
     }
 
     private String startUI(){
+        AppFrame appFrame = new AppFrame();
         return null;
     }
 

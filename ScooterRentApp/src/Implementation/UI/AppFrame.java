@@ -1,6 +1,11 @@
 package Implementation.UI;
 
+import Implementation.Main;
+
 import javax.swing.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 public class AppFrame extends JFrame {
 
@@ -8,7 +13,15 @@ public class AppFrame extends JFrame {
 
     public AppFrame(){
         super(_frameName);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        WindowListener exitListener = new WindowAdapter() {
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+                Main._isWorking = false;
+            }
+        };
+        addWindowListener(exitListener);
         setVisible(true);
         setContentPane(new MainPanel());
         pack();
